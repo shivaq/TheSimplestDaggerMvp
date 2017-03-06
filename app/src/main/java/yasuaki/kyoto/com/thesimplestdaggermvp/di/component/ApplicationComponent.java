@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import yasuaki.kyoto.com.thesimplestdaggermvp.MvpApplication;
+import yasuaki.kyoto.com.thesimplestdaggermvp.data.DataManager;
 import yasuaki.kyoto.com.thesimplestdaggermvp.di.ApplicationContext;
 import yasuaki.kyoto.com.thesimplestdaggermvp.di.module.ApplicationModule;
 
@@ -20,6 +21,6 @@ public interface ApplicationComponent {
     Context context();
 
     Application application();
-//    DataManager getDataManager();
+    DataManager getDataManager();
 
 }

@@ -3,20 +3,16 @@ package yasuaki.kyoto.com.thesimplestdaggermvp.di.module;
 import android.app.Application;
 import android.content.Context;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
-import yasuaki.kyoto.com.thesimplestdaggermvp.data.AppDataManager;
-import yasuaki.kyoto.com.thesimplestdaggermvp.data.DataManager;
 import yasuaki.kyoto.com.thesimplestdaggermvp.di.ApplicationContext;
 
 @Module
-public class ApplicationModule {
+public class ApplicationTestModule {
 
     private final Application mApplication;
 
-    public ApplicationModule(Application application) {
+    public ApplicationTestModule(Application application) {
         mApplication = application;
     }
 
@@ -29,12 +25,6 @@ public class ApplicationModule {
     @Provides
     Application provideApplication() {
         return mApplication;
-    }
-
-    @Provides
-    @Singleton
-    DataManager provideDataManager(AppDataManager appDataManager) {
-        return appDataManager;
     }
 
 }

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements MvpView{
                 .build();
 
         getActivityComponent().inject(this);// エロイム、エッサイム、我は求め訴えたり！
-        mPresenter.onAttachView(this);
+        mPresenter.onAttachMvpView(this);
 
         Timber.d("MainActivity:onCreate: unko");
     }
