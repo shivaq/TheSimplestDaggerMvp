@@ -55,4 +55,10 @@ dependencies {
     androidTestCompile "com.google.dexmaker:dexmaker:$rootProject.dexmakerVersion"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:$rootProject.dexmakerVersion"
     androidTestCompile "org.assertj:assertj-core:$rootProject.assertJ"
+
+    //workaround for dependency conflict
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:25.2.0'
+    }
 }
+

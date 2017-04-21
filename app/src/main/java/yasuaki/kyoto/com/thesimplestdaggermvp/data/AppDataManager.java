@@ -4,10 +4,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * DataManager は データどもを束ねる長である。
- *
+ * DataManager は Db, Preferences, Remote といった データ三銃士どもを束ねる長である。
  * Db, Preferences, Remote といった データ三銃士がそれぞれガンダム化し、
  * その魂をアカシックレコードに刻む
+ *
  *
  * 彼らを DataManager インターフェイス が継承することで、
  * その因縁を実装した AppDataManager が
