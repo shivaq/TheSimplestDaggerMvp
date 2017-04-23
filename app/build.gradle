@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -20,22 +21,26 @@ android {
 }
 
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
+    // デフォルトで使うものども
     // android support libraries
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    compile "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
 
     // butterknife
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 
-    // Logger
-    compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+    // database
+    compile "com.facebook.stetho:stetho:$rootProject.stethoVersion"
+    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.stethoVersion"
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
 
     // dependency injection
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
@@ -43,16 +48,44 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'javax.inject:javax.inject:1'
 
+    // constraint layout
+    compile "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+
+    // Logger
+    compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
     // unit test
     testCompile "junit:junit:$rootProject.junitVersion"
     testCompile "org.assertj:assertj-core:$rootProject.assertJ"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testCompile "org.robolectric:robolectric:$rootProject.robolectricVersion"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
     // ui test
     androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
     androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+
     androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestCompile "com.google.dexmaker:dexmaker:$rootProject.dexmakerVersion"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:$rootProject.dexmakerVersion"
     androidTestCompile "org.assertj:assertj-core:$rootProject.assertJ"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+
+    // assertJ addon
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
+
+    // Android Testing Support Library's runner and rules
+    androidTestCompile "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestCompile "com.android.support.test:rules:$rootProject.runnerVersion"
+
+    // for analytics
+    compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
+    // firebase
+    compile "com.google.firebase:firebase-ads:$rootProject.firebaseVersion"
+
+    //workaround for dependency conflict
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:25.2.0'
+    }
 }
