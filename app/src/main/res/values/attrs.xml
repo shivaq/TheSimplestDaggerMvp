@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="CustomView">
+    <attr name="custom_view_title" format="string"/>
+    <attr name="custom_view_subtitle" format="string"/>
+  </declare-styleable>
+
+  <declare-styleable name="CharacterFrameView">
+    <attr name="character_circle" format="reference"/>
+    <attr name="character_body" format="reference"/>
+    <attr name="character_mouse" format="reference"/>
+    <attr name="character_eye" format="reference"/>
+    <attr name="character_base" format="string"/>
+  </declare-styleable>
+</resources>
