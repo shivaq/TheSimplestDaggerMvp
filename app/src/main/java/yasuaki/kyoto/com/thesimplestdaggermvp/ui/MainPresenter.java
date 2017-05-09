@@ -1,50 +1,34 @@
 package yasuaki.kyoto.com.thesimplestdaggermvp.ui;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 import yasuaki.kyoto.com.thesimplestdaggermvp.data.DataManager;
+import yasuaki.kyoto.com.thesimplestdaggermvp.di.PerActivity;
+import yasuaki.kyoto.com.thesimplestdaggermvp.ui.base.BasePresenter;
 
-public class MainPresenter<V extends MvpView> implements MvpPresenter<V> {
+@PerActivity//Use this scope annotation to make presenter configure persistent
+public class MainPresenter implements BasePresenter<MainMvpView> {
 
-    // メフィストフェレスが契約者リストに入れていないため？？
-    // メソッドに Inject をつけるとよくないことが起きる。
-    // リストにないならば、お前がガンダムになるしかない。
-    private DataManager mDataManager;
-    private V mMvpView;
+    private final DataManager dataManager;
+    private MainMvpView mainMvpView;
 
-//    @Inject
-//    public MainPresenter(DataManager dataManager) {
-//        mDataManager = dataManager;
-//        Timber.d("MainPresenter:MainPresenter: dataManager is %s", mDataManager);
-//    }
-
-    // 創造主@Module が このPresenter を求めている。
-    // 契約者も求めている。
-    // 求められている@Provides 供物に 刻印@Inject を打つ事でガンダム化し、
-    // アカシックレコードに取り込まないと、世界の理がゆらぎ、よくないことが起きる。
-    // ※契約者は、ガンダム化はしなくてもアカシックレコードに取り込まれるため、
-    // 刻印無しで創造主に利用される
+    // A presenter is integrated into object graph.
+    // Then a presenter could summon instances and be summoned from components.
     @Inject
-    public MainPresenter() {
+    public MainPresenter(DataManager dataManager) {
+        this.dataManager = dataManager;
     }
 
     @Override
-    public void onAttachView(V mvpView) {
-        mMvpView = mvpView;
-        Timber.d("MainPresenter:onAttachView: mMvpView is %s", mMvpView);
+    public void onAttachMvpView(MainMvpView mvpView) {
+        mainMvpView = mvpView;
     }
 
     @Override
-    public void onDetachView() {
-        mMvpView = null;
+    public void onDetachMvpView() {
+        mainMvpView = null;
     }
 
     public boolean isViewAttached() {
-        return mMvpView != null;
-    }
-
-    public V getMvpView() {
-        return mMvpView;
+        return mainMvpView != null;
     }
 }

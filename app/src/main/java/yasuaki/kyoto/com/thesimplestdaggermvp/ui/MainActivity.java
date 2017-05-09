@@ -1,34 +1,22 @@
 package yasuaki.kyoto.com.thesimplestdaggermvp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
-import timber.log.Timber;
-import yasuaki.kyoto.com.thesimplestdaggermvp.MvpApplication;
+import javax.inject.Inject;
 import yasuaki.kyoto.com.thesimplestdaggermvp.R;
+import yasuaki.kyoto.com.thesimplestdaggermvp.di.ApplicationContext;
 import yasuaki.kyoto.com.thesimplestdaggermvp.di.component.ActivityComponent;
-import yasuaki.kyoto.com.thesimplestdaggermvp.di.component.DaggerActivityComponent;
-import yasuaki.kyoto.com.thesimplestdaggermvp.di.module.ActivityModule;
+import yasuaki.kyoto.com.thesimplestdaggermvp.ui.base.BaseActivity;
 
-public class MainActivity extends AppCompatActivity implements MvpView{
+public class MainActivity extends BaseActivity implements MainMvpView{
 
-    /**
-     * フィールドでアカシックレコードに手を伸ばせば、onCreate 前にそれを手にできる。
-     */
+    // Inject Presenter from an object graph
     @Inject
-    MvpPresenter<MvpView> mPresenter;
-
-    /**
-     * 下記のように、契約者が俺がガンダムだ、をしても、フィールドで手を伸ばさない限り、
-     * onCreate の段階で mPresenter はnull。
-     */
-//    @Inject
-//    public MainActivity(MvpPresenter<MvpView> mainPresenter) {
-//        mPresenter = mainPresenter;
-//    }
+    MainPresenter mainPresenter;
+    @Inject
+    @ApplicationContext
+    Context context;
 
     public MainActivity(){}
 
@@ -40,19 +28,16 @@ public class MainActivity extends AppCompatActivity implements MvpView{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // 契約者は、魔法陣でメフィストフェレスと契約を結ぶ
-        mActivityComponent = DaggerActivityComponent.builder()
-                .activityModule(new ActivityModule(this))
-                .applicationComponent(((MvpApplication) getApplication()).getComponent())
-                .build();
+        // inject to retrieve components from object graph
+        getActivityComponent().inject(this);
 
-        getActivityComponent().inject(this);// エロイム、エッサイム、我は求め訴えたり！
-        mPresenter.onAttachView(this);
-
-        Timber.d("MainActivity:onCreate: unko");
+        mainPresenter.onAttachMvpView(this);
     }
 
-    public ActivityComponent getActivityComponent() {
-        return mActivityComponent;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainPresenter.onDetachMvpView();
     }
+
 }

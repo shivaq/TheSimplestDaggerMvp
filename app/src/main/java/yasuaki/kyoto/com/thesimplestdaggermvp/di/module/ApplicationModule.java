@@ -2,9 +2,11 @@ package yasuaki.kyoto.com.thesimplestdaggermvp.di.module;
 
 import android.app.Application;
 import android.content.Context;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
+import yasuaki.kyoto.com.thesimplestdaggermvp.data.AppDataManager;
+import yasuaki.kyoto.com.thesimplestdaggermvp.data.DataManager;
 import yasuaki.kyoto.com.thesimplestdaggermvp.di.ApplicationContext;
 
 @Module
@@ -27,10 +29,10 @@ public class ApplicationModule {
         return mApplication;
     }
 
-//    @Provides
-//    @Singleton
-//    DataManager provideDataManager(AppDataManager appDataManager) {
-//        return appDataManager;
-//    }
+    @Provides
+    @Singleton
+    DataManager provideDataManager(AppDataManager appDataManager) {
+        return appDataManager;
+    }
 
 }
